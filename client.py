@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Author: Christian Dees - March 13, 2025
 import socket
 import sys

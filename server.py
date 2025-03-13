@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Author: Christian Dees - March 13, 2025
 import socket
 import udt, packet
@@ -56,17 +57,21 @@ def recv_file(sock, protocol):
     return filename
 
 def main():
-    # Get port and protocol
-    port = int(input('Enter port: '))
-    while ((protocol := input('Enter protocol (SnW/GBN): ').strip().lower()) != 'snw'): print('Invalid protocol, please try again.')
-    # Create a UDP socket
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    server_address = ('localhost', port)
-    sock.bind(server_address)
-    # Hardcode snw cuz gbn not implimented yet
-    print(f'Server listening on port {port} using snw protocol...')
-    # Begin file transfer
-    filename = recv_file(sock, protocol)
+    try:
+        # Get port and protocol
+        port = int(input('Enter port: '))
+        while ((protocol := input('Enter protocol (SnW/GBN): ').strip().lower()) != 'snw'): print('Invalid protocol, please try again.')
+        # Create a UDP socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        server_address = ('localhost', port)
+        sock.bind(server_address)
+        # Hardcode snw cuz gbn not implimented yet
+        print(f'Server listening on port {port} using snw protocol...')
+        # Begin file transfer
+        filename = recv_file(sock, protocol)
+    except KeyboardInterrupt: 
+        print('\nServer: Process cancelled\nExiting...')
+        exit(1)
     print("-" * 75)
     print(f"File saved as '{filename}'".center(75, "-") if filename else "No file created".center(75, "-"))
     print("-" * 75)
